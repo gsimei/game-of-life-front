@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import LoginPage from "./components/LoginPage";
+import GameStates from "./components/GameStates";
+import GameStateShow from "./components/GameStateShow";
+import { AuthContext } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
-function App() {
+const App = () => {
+  const { isAuthenticated } = useContext(AuthContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/login" element={isAuthenticated ? <Navigate to="/gamestates" /> : <LoginPage />} />
+        <Route path="/" element={isAuthenticated ? <Navigate to="/gamestates" /> : <Navigate to="/login" />} />
+
+        {/* ROTAS PROTEGIDAS */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/gamestates" element={<GameStates />} />
+          <Route path="/gamestates/:id" element={<GameStateShow />} />
+        </Route>
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
