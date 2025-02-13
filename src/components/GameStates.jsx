@@ -1,12 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import NewGameStateForm from "./NewGameStateForm"; // Importa o formulário
 
 const GameStates = () => {
   const { token, logout } = useContext(AuthContext);
   const [gameStates, setGameStates] = useState([]);
-  const [showForm, setShowForm] = useState(false); // Estado para controlar o formulário
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,13 +24,18 @@ const GameStates = () => {
 
         const data = await response.json();
         setGameStates(data);
+
+        // Redireciona para a página de criação se não houver game states
+        if (data.length === 0) {
+          navigate("/gamestates/new");
+        }
       } catch (error) {
         console.error(error);
       }
     };
 
     fetchGameStates();
-  }, [token]);
+  }, [token, navigate]);
 
   const handleLogout = async () => {
     await logout();
@@ -43,15 +46,8 @@ const GameStates = () => {
     <div>
       <h1>Game States</h1>
       <button onClick={handleLogout}>Logout</button>
-
-      {/* Botão para exibir o formulário de criação */}
-      <button onClick={() => setShowForm(!showForm)} style={{ marginLeft: "10px" }}>
-        {showForm ? "Fechar" : "Novo GameState"}
-      </button>
-
-      {/* Exibe o formulário se showForm for true */}
-      {showForm && <NewGameStateForm />}
-
+      <button onClick={() => navigate("/gamestates/new")}>Novo GameState</button>
+      {/* Se não houver game states, redireciona automaticamente para a criação */}
       {gameStates.length === 0 ? (
         <p>Carregando game states...</p>
       ) : (
