@@ -1,15 +1,19 @@
 import React, { useState, useContext } from "react";
+import Swal from "sweetalert2";
 import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom"; // Adicione isso para corrigir o erro de 'navigate'
+import { useNavigate } from "react-router-dom";
 
 const NewGameStateForm = () => {
   const { token } = useContext(AuthContext);
-  const [file, setFile] = useState(null); // Defina o estado para 'file'
-  const navigate = useNavigate(); // Defina 'navigate' corretamente
+  const [file, setFile] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!file) return;
+    if (!file) {
+      Swal.fire("Erro", "Por favor, selecione um arquivo .txt!", "error");
+      return;
+    }
 
     const formData = new FormData();
     formData.append("game_state[input_file]", file);
@@ -17,21 +21,31 @@ const NewGameStateForm = () => {
     try {
       const response = await fetch("http://localhost:3000/api/v1/game_states", {
         method: "POST",
-        headers: {
-          "Authorization": `Bearer ${token}` // 'token' já está definido corretamente
-        },
-        body: formData
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
       });
 
-      if (!response.ok) throw new Error("Falha ao criar novo GameState");
-
       const data = await response.json();
-      console.log("GameState criado:", data);
 
-      // Redireciona para o novo GameState após a criação
-      navigate(`/gamestates/${data.id}`);
+      if (!response.ok) {
+        // 🚀 Pegamos o erro correto da chave `base`
+        const errorMessage = data.base ? data.base.join("\n") : "Erro desconhecido ao processar o arquivo";
+        throw new Error(errorMessage);
+      }
+
+      Swal.fire({
+        title: "Sucesso!",
+        text: "GameState criado com sucesso!",
+        icon: "success",
+      }).then(() => navigate(`/gamestates/${data.id}`));
+
     } catch (error) {
-      console.error(error);
+      console.error("Erro na API:", error); // Para depuração
+      Swal.fire({
+        title: "Erro ao criar GameState",
+        text: error.message, // Agora pegamos o erro corretamente
+        icon: "error",
+      });
     }
   };
 
@@ -39,11 +53,7 @@ const NewGameStateForm = () => {
     <form onSubmit={handleSubmit}>
       <label>
         Selecione o arquivo .txt:
-        <input
-          type="file"
-          accept=".txt"
-          onChange={(e) => setFile(e.target.files[0])} // Atualiza 'file' no estado
-        />
+        <input type="file" accept=".txt" onChange={(e) => setFile(e.target.files[0])} />
       </label>
       <button type="submit">Criar GameState</button>
     </form>
