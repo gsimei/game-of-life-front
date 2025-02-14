@@ -30,7 +30,7 @@ const Navbar = () => {
               </DisclosureButton>
             </div>
             <div className="flex shrink-0 items-center">
-              <img alt="Extendi" src="/src/assets/logo-black.jpeg" className="h-16 w-auto" />
+              <img alt="Extendi" src="/logo-black.jpeg" className="h-16 w-auto" />
             </div>
           </div>
           <div className="flex items-center">
