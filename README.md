@@ -33,7 +33,11 @@ A React + Vite web application that serves as the frontend for the Game of Life.
 ### **1. Prerequisites**
 - [Node.js](https://nodejs.org/)
 - [npm](https://www.npmjs.com/) or [Yarn](https://yarnpkg.com/)
-- (Optional) [Docker](https://docs.docker.com/get-docker/) if using containers
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/)
+- Git installed on your machine.
+
+---
 
 ### **2. Clone the Repository**
 ```bash
