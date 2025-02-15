@@ -121,7 +121,7 @@ const LoginPage = () => {
       <div className="relative hidden w-0 flex-1 lg:block">
         <img
           alt="Game of Life"
-          src="/src/assets/logo-black.jpeg"
+          src="/logo-black.jpeg"
           className="absolute  w-full h-full"
         />
       </div>
