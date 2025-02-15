@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "./AuthContext"; // ✅ Importando corretamente
-import config from '../config';
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(() => localStorage.getItem("token") || null);
@@ -21,7 +20,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     if (token) {
       try {
-        const response = await fetch(`${config.apiBaseUrl}/users/sign_out`, {
+        const response = await fetch("https://game-of-life-api-2bbe83eb66ac.herokuapp.com/api/v1/users/sign_out", {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

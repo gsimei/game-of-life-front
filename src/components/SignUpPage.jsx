@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import config from '../config';
 import Swal from "sweetalert2";
 
 const SignUpPage = () => {
@@ -21,7 +20,7 @@ const SignUpPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${config.apiBaseUrl}/users`, {
+      const response = await fetch("https://game-of-life-api-2bbe83eb66ac.herokuapp.com/api/v1/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

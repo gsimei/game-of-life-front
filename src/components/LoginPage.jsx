@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import config from '../config';
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -13,7 +12,7 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${config.apiBaseUrl}/users/sign_in`, {
+      const response = await fetch("ttps://game-of-life-api-2bbe83eb66ac.herokuapp.com/api/v1/users/sign_in", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
