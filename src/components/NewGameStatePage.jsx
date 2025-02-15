@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { FaPuzzlePiece } from "react-icons/fa";
+import config from "../config";
 
 const NewGameStatePage = () => {
   const { token } = useContext(AuthContext);
@@ -15,7 +16,7 @@ const NewGameStatePage = () => {
     // Fetch existing game states to check if there are any
     const fetchGameStates = async () => {
       try {
-        const response = await fetch("https://game-of-life-api-2bbe83eb66ac.herokuapp.com/api/v1/game_states", {
+        const response = await fetch(`${config.apiBaseUrl}/game_states`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();
@@ -45,7 +46,7 @@ const NewGameStatePage = () => {
     formData.append("game_state[input_file]", file);
 
     try {
-      const response = await fetch("https://game-of-life-api-2bbe83eb66ac.herokuapp.com/api/v1/game_states", {
+      const response = await fetch(`${config.apiBaseUrl}/game_states`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,

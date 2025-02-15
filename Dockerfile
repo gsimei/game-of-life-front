@@ -1,26 +1,33 @@
+# Stage 1: Building the application
 FROM node:20-alpine AS build
 
 WORKDIR /app
+
+# Define a build argument
+ARG VITE_BUILD_MODE=production
+
+# Pass this argument as an environment variable for the build
+ENV VITE_BUILD_MODE=$VITE_BUILD_MODE
+
+# Copy and install dependencies
 COPY package.json package-lock.json ./
 RUN npm install --frozen-lockfile
 COPY . .
-RUN npm run build
 
+# Use the mode defined at build time
+RUN npm run build -- --mode $VITE_BUILD_MODE
+
+# Stage 2: Serving the static files with Nginx
 FROM nginx:alpine
 
-# Remover arquivos padrão
+# Remove default Nginx HTML files
 RUN rm -rf /usr/share/nginx/html/*
-
-# Copiar build
+# Copy the built files from the build stage
 COPY --from=build /app/dist /usr/share/nginx/html
-
-# Copia template
+# Copy the Nginx configuration template
 COPY default.conf.template /etc/nginx/conf.d/default.conf.template
 
-# [Opcional] Remover user directive do /etc/nginx/nginx.conf se precisar
-# RUN sed -i 's/user  nginx;//' /etc/nginx/nginx.conf
-
-# A porta exposta aqui é irrelevante pro Heroku, mas útil localmente
+# Expose port 8080
 EXPOSE 8080
-
+# Substitute environment variables in the Nginx configuration and start Nginx
 CMD ["sh", "-c", "envsubst '$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"]
