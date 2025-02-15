@@ -13,13 +13,13 @@ const GameStateShow = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Exibe a mensagem de sucesso se necessário
+  // Show success message if necessary
   useEffect(() => {
     if (location.state?.showSuccessMessage) {
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "GameState criado com sucesso!",
+        title: "GameState created successfully!",
         width: "20rem",
         showConfirmButton: false,
         timer: 1000,
@@ -28,7 +28,7 @@ const GameStateShow = () => {
     }
   }, [location.state]);
 
-  // Busca inicial do GameState
+  // Initial fetch of the GameState
   useEffect(() => {
     const fetchGameState = async () => {
       try {
@@ -40,7 +40,7 @@ const GameStateShow = () => {
           },
         });
 
-        if (!response.ok) throw new Error("Erro ao buscar o game state");
+        if (!response.ok) throw new Error("Error fetching game state");
 
         const data = await response.json();
         setGameState(data);
@@ -54,7 +54,7 @@ const GameStateShow = () => {
     }
   }, [id, token]);
 
-  // ✅ Usando useCallback para evitar recriação da função
+  // Using useCallback to avoid function recreation
   const handleNextGeneration = useCallback(async () => {
     if (!id) return;
     try {
@@ -65,14 +65,15 @@ const GameStateShow = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (!response.ok) throw new Error("Erro ao avançar para a próxima geração");
+      if (!response.ok) throw new Error("Error advancing to the next generation");
       const data = await response.json();
       setGameState(data);
     } catch (error) {
       console.error(error);
     }
-  }, [id, token]); // ✅ Agora a função
-  // Função para resetar o jogo
+  }, [id, token]);
+
+  // Function to reset the game
   const handleResetGame = async () => {
     if (!id) return;
     try {
@@ -83,7 +84,7 @@ const GameStateShow = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (!response.ok) throw new Error("Erro ao resetar o jogo");
+      if (!response.ok) throw new Error("Error resetting the game");
       const data = await response.json();
       setGameState(data);
     } catch (error) {
@@ -91,7 +92,7 @@ const GameStateShow = () => {
     }
   };
 
-  // Função para deletar o GameState
+  // Function to delete the GameState
   const handleDeleteGame = async () => {
     if (!id) return;
     try {
@@ -102,7 +103,7 @@ const GameStateShow = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (!response.ok) throw new Error("Erro ao deletar o game state");
+      if (!response.ok) throw new Error("Error deleting the game state");
 
       navigate("/gamestates", { state: { showSuccessMessage: true } });
 
@@ -111,36 +112,36 @@ const GameStateShow = () => {
     }
   };
 
-  // Iniciar/parar simulação com setInterval
+  // Start/stop simulation with setInterval
   useEffect(() => {
     if (isPlaying) {
       intervalRef.current = setInterval(() => {
         handleNextGeneration();
-      }, 200); // Velocidade fixa de 200ms
+      }, 200); // Fixed speed of 200ms
     } else {
       clearInterval(intervalRef.current);
     }
 
     return () => clearInterval(intervalRef.current);
-  }, [isPlaying, handleNextGeneration]); // 🔥 Incluímos handleNextGeneration aqui
+  }, [isPlaying, handleNextGeneration]);
 
   if (!gameState || !gameState.state) {
-    return <p className="text-center text-gray-600">Carregando detalhes do jogo...</p>;
+    return <p className="text-center text-gray-600">Loading game details...</p>;
   }
 
-  // Renderiza o tabuleiro
+  // Render the board
   const renderBoard = () => {
     const { cols, state } = gameState;
     return (
-      <div className="w-full overflow-auto pb-4"> {/* Container com scroll para telas pequenas */}
+      <div className="w-full overflow-auto pb-4"> {/* Scrollable container for small screens */}
         <div
           className="grid gap-px bg-black mx-auto p-1"
           style={{
             gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
             gridTemplateRows: `repeat(${state.length}, minmax(0, 1fr))`,
-            aspectRatio: cols / state.length, // Manter proporção do tabuleiro
-            maxWidth: "90vh", // Limitar tamanho máximo baseado na altura da viewport
-            width: "100%", // Ocupar largura total disponível
+            aspectRatio: cols / state.length, // Maintain board proportion
+            maxWidth: "90vh", // Limit max size based on viewport height
+            width: "100%", // Occupy full available width
           }}
         >
           {state.flat().map((cell, index) => (
@@ -157,7 +158,8 @@ const GameStateShow = () => {
 
   return (
     <div className="space-y-10 divide-y divide-gray-900/10 m-4 md:m-10">
-      <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-4">        {/* Painel esquerdo */}
+      <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-4">
+        {/* Left panel */}
         <div className="px-4 sm:px-0 flex justify-start items-end flex-col md:col-span-1">
           <button
             onClick={() => navigate("/gamestates")}
@@ -168,7 +170,7 @@ const GameStateShow = () => {
           <h2 className="text-base font-semibold text-gray-900 mt-4">Game State</h2>
           <p className="mt-1 text-sm text-gray-600">Keep an eye on those cells! They might just start a revolution.</p>
 
-          {/* Botões de controle */}
+          {/* Control buttons */}
           <div className="flex mt-4 gap-5">
             <button onClick={handleResetGame} className="text-yellow-500">
               <FaRedo size={24} />
@@ -185,12 +187,12 @@ const GameStateShow = () => {
           </div>
         </div>
 
-        {/* Tabuleiro do Jogo */}
+        {/* Game board */}
         <div className="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-3 p-4">
           <h2 className="text-base font-semibold text-gray-900">Generation {gameState.generation}</h2>
           <p className="mt-1 text-sm text-gray-600">Population: {gameState.alived_cells_count}</p>
           <div className="block md:hidden text-center text-red-500 mb-4 landscape:hidden">
-            Rotacione o dispositivo para uma melhor experiência.
+            Rotate the device for a better experience.
           </div>
           {renderBoard()}
         </div>

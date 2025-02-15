@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "./AuthContext"; // ✅ Importando corretamente
+import { AuthContext } from "./AuthContext"; // ✅ Correctly importing
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(() => localStorage.getItem("token") || null);
@@ -16,7 +16,10 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
+  // Function to handle login
   const login = (newToken) => setToken(newToken);
+
+  // Function to handle logout
   const logout = async () => {
     if (token) {
       try {
@@ -29,13 +32,13 @@ export const AuthProvider = ({ children }) => {
         });
 
         if (!response.ok) {
-          console.error("Erro ao revogar o token no backend:", await response.json());
+          console.error("Error revoking token on backend:", await response.json());
         }
       } catch (error) {
-        console.error("Erro na requisição de logout:", error);
+        console.error("Error in logout request:", error);
       }
     }
-    // Remove o token localmente após a tentativa de logout (independente da resposta da API)
+    // Remove the token locally after the logout attempt (regardless of the API response)
     setToken(null);
   };
 
