@@ -7,6 +7,7 @@ A React + Vite web application that serves as the frontend for the Game of Life.
 ## **Table of Contents**
 1. [Overview](#overview)
 2. [Features](#features)
+3. [Setup and Installation](#setup-and-installation)
 3. [Running the Project](#running-the-project)
 4. [License](#license)
 5. [Author](#author)
@@ -40,12 +41,19 @@ A React + Vite web application that serves as the frontend for the Game of Life.
   cd game-of-life-front
 ```
 
-### **3. Running the Project**
+---
+
+## **Running the Project**
+
+### **Using Docker Compose**
+To run the development environment:
+
 ```bash
   VITE_BUILD_MODE=development docker compose up --build
 ```
 
-To stop
+Once the setup is complete, access the app at:
+http://localhost:5173
 
 ```bash
   docker compose down
@@ -53,12 +61,14 @@ To stop
 
 ---
 
-### **4. Licence**
-This project is licensed under the MIT License.
+## **License**
 
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
-### **5. Author**
-George Simei
+---
 
-- GitHub: @gsimei
-- Email: georgesimei@gmail.com
+## **Author**
+
+### **George Simei**
+* GitHub: [@gsimei](https://github.com/gsimei)
+* Email: georgesimei@gmail.com
