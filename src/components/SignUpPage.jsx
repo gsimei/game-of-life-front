@@ -13,10 +13,12 @@ const SignUpPage = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  // Handle input change
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -32,19 +34,19 @@ const SignUpPage = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.errors ? data.errors.join("\n") : "Erro ao criar conta");
+        throw new Error(data.errors ? data.errors.join("\n") : "Error creating account");
       }
 
       Swal.fire({
-          position: "top-end",
-          title: "Sucesso!",
-          text: "Conta criada com sucesso!",
-          icon: "success",
-          width: "20rem",
-          showConfirmButton: false,
-          timer: 1000,
-          heightAuto: false
-        });
+        position: "top-end",
+        title: "Success!",
+        text: "Account created successfully!",
+        icon: "success",
+        width: "20rem",
+        showConfirmButton: false,
+        timer: 1000,
+        heightAuto: false
+      });
 
       if (data.token) {
         login(data.token);
@@ -53,7 +55,7 @@ const SignUpPage = () => {
     } catch (error) {
       setError(error.message);
       Swal.fire({
-        title: "Erro",
+        title: "Error",
         text: error.message,
         icon: "error",
         heightAuto: false
@@ -68,7 +70,7 @@ const SignUpPage = () => {
           <div>
             <h2 className="mt-8 text-2xl font-bold tracking-tight text-gray-900">Create an account</h2>
             <p className="mt-2 text-sm text-gray-500">
-              Um simulador de autômatos celulares criado por John Conway.
+              A cellular automaton simulator created by John Conway.
             </p>
           </div>
 

@@ -9,6 +9,7 @@ const LoginPage = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  // Handle login form submission
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -21,14 +22,14 @@ const LoginPage = () => {
         body: JSON.stringify({ user: { email, password } }),
       });
 
-      if (!response.ok) throw new Error("Login falhou. Verifique suas credenciais.");
+      if (!response.ok) throw new Error("Login failed. Please check your credentials.");
 
       const data = await response.json();
       if (data.token) {
         login(data.token);
         navigate("/gamestates");
       } else {
-        throw new Error("Token JWT não recebido do backend!");
+        throw new Error("JWT token not received from backend!");
       }
     } catch (error) {
       setError(error.message);
@@ -42,7 +43,7 @@ const LoginPage = () => {
           <div>
             <h2 className="mt-8 text-2xl font-bold tracking-tight text-gray-900">Sign in to your account</h2>
             <p className="mt-2 text-sm text-gray-500">
-              Um simulador de autômatos celulares criado por John Conway.
+              A cellular automaton simulator created by John Conway.
             </p>
           </div>
 
@@ -101,7 +102,7 @@ const LoginPage = () => {
                       <div className="w-full border-t border-gray-200" />
                     </div>
                     <div className="relative flex justify-center text-sm font-medium">
-                      <span className="bg-white px-6 text-gray-900">Ou</span>
+                      <span className="bg-white px-6 text-gray-900">Or</span>
                     </div>
                   </div>
 

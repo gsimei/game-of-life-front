@@ -10,6 +10,7 @@ const GameStates = () => {
   const location = useLocation();
 
   useEffect(() => {
+    // Function to fetch game states from the API
     const fetchGameStates = async () => {
       try {
         const response = await fetch("https://game-of-life-api-2bbe83eb66ac.herokuapp.com/api/v1/game_states", {
@@ -21,13 +22,13 @@ const GameStates = () => {
         });
 
         if (!response.ok) {
-          throw new Error("Erro ao buscar os game states");
+          throw new Error("Error fetching game states");
         }
 
         const data = await response.json();
         setGameStates(data);
 
-        // Redireciona para a página de criação se não houver game states
+        // Redirect to the creation page if there are no game states
         if (data.length === 0) {
           navigate("/gamestates/new");
         }
@@ -40,11 +41,12 @@ const GameStates = () => {
   }, [token, navigate]);
 
   useEffect(() => {
+    // Show success message if game state was deleted successfully
     if (location.state?.showSuccessMessage) {
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "GameState deletado com sucesso!",
+        title: "GameState deleted successfully!",
         showConfirmButton: false,
         timer: 1500,
         heightAuto: false
@@ -55,7 +57,7 @@ const GameStates = () => {
   return (
     <div className="space-y-10 divide-y divide-gray-900/10 m-10">
       <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
-        {/* Lado esquerdo - informações */}
+        {/* Left side - information */}
         <div className="px-4 sm:px-0 flex justify-start items-end flex-col">
           <button
             onClick={() => navigate("/gamestates/new")}
@@ -74,10 +76,10 @@ const GameStates = () => {
           <p className="mt-1 text-sm text-gray-600">Explore all your universes here. Who knows, you might find some life!</p>
         </div>
 
-        {/* Lado direito - Lista de Game States */}
+        {/* Right side - List of Game States */}
         <ul role="list" className="divide-y divide-gray-100 bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
           {gameStates.length === 0 ? (
-            <li className="relative flex justify-center px-4 py-5 text-gray-500">Carregando game states...</li>
+            <li className="relative flex justify-center px-4 py-5 text-gray-500">Loading game states...</li>
           ) : (
             gameStates.map((gameState) => (
               <li key={gameState.id} className="relative flex justify-between gap-x-6 px-4 py-5 sm:px-6 lg:px-8">

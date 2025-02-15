@@ -13,6 +13,7 @@ const Navbar = () => {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  // Handle logout action
   const handleLogout = async () => {
     await logout();
     navigate("/login");
