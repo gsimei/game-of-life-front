@@ -33,7 +33,7 @@ const GameStateShow = () => {
   useEffect(() => {
     const fetchGameState = async () => {
       try {
-        const response = await fetch(`${config.apiBaseUrl}/v1/game_states/${id}`, {
+        const response = await fetch(`${config.apiBaseUrl}/game_states/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -59,7 +59,7 @@ const GameStateShow = () => {
   const handleNextGeneration = useCallback(async () => {
     if (!id) return;
     try {
-      const response = await fetch(`${config.apiBaseUrl}/v1/game_states/${id}/next_generation`, {
+      const response = await fetch(`${config.apiBaseUrl}/game_states/${id}/next_generation`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -77,7 +77,7 @@ const GameStateShow = () => {
   const handleResetGame = async () => {
     if (!id) return;
     try {
-      const response = await fetch(`${config.apiBaseUrl}/v1/game_states/${id}/reset_to_initial`, {
+      const response = await fetch(`${config.apiBaseUrl}/game_states/${id}/reset_to_initial`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -96,7 +96,7 @@ const GameStateShow = () => {
   const handleDeleteGame = async () => {
     if (!id) return;
     try {
-      const response = await fetch(`${config.apiBaseUrl}/v1/game_states/${id}`, {
+      const response = await fetch(`${config.apiBaseUrl}/game_states/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
