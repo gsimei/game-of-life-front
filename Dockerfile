@@ -19,7 +19,10 @@ COPY --from=build /app/dist /usr/share/nginx/html
 # Copia a configuração corrigida para a pasta correta do Nginx
 COPY default.conf /etc/nginx/conf.d/default.conf
 
-# Expondo a porta correta (Heroku define automaticamente via $PORT)
+# Define a variável de ambiente PORT para garantir que Nginx saiba a porta correta
+ENV PORT 8080
+
+# Expondo a porta correta
 EXPOSE 8080
 
 # Comando para iniciar o Nginx
