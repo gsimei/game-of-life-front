@@ -20,10 +20,10 @@ COPY --from=build /app/dist /usr/share/nginx/html
 COPY default.conf /etc/nginx/conf.d/default.conf
 
 # Define a variável de ambiente PORT para garantir que Nginx saiba a porta correta
-ENV PORT 8080
+ENV PORT 3000
 
 # Expondo a porta correta
-EXPOSE 8080
+EXPOSE 3000
 
 # Comando para iniciar o Nginx
 CMD ["nginx", "-g", "daemon off;"]
