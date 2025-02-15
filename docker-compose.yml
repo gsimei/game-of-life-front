@@ -1,9 +1,11 @@
-version: '3.8'
 services:
   frontend:
-    build: .
-    # Define a variável de ambiente localmente
+    build:
+      context: .
+      args:
+        - VITE_BUILD_MODE=${VITE_BUILD_MODE:-development}  # Default: development
     environment:
-      - PORT=8080
+      - VITE_BUILD_MODE=${VITE_BUILD_MODE:-development}  # Default: development
     ports:
       - "5173:8080"
+    tty: true

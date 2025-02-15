@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
+import config from "../config";
 import Swal from "sweetalert2";
 
 const GameStates = () => {
@@ -13,7 +14,7 @@ const GameStates = () => {
     // Function to fetch game states from the API
     const fetchGameStates = async () => {
       try {
-        const response = await fetch("https://game-of-life-api-2bbe83eb66ac.herokuapp.com/api/v1/game_states", {
+        const response = await fetch(`${config.apiBaseUrl}/game_states`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
