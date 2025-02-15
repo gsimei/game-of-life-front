@@ -15,7 +15,7 @@ const NewGameStatePage = () => {
   useEffect(() => {
     const fetchGameStates = async () => {
       try {
-        const response = await fetch(`${config.apiBaseUrl}/v1/game_states`, {
+        const response = await fetch(`${config.apiBaseUrl}/game_states`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();
@@ -44,7 +44,7 @@ const NewGameStatePage = () => {
     formData.append("game_state[input_file]", file);
 
     try {
-      const response = await fetch(`${config.apiBaseUrl}/v1/game_states`, {
+      const response = await fetch(`${config.apiBaseUrl}/game_states`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
