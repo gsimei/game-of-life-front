@@ -16,8 +16,8 @@ RUN rm -rf /usr/share/nginx/html/*
 # Copia os arquivos da build para o diretório padrão do Nginx
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copia a configuração corrigida do Nginx
-COPY nginx.conf /etc/nginx/nginx.conf
+# Copia a configuração corrigida para a pasta correta do Nginx
+COPY default.conf /etc/nginx/conf.d/default.conf
 
 # Expondo a porta correta (Heroku define automaticamente via $PORT)
 EXPOSE 8080
