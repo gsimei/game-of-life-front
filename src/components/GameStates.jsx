@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
+import config from './config';
 import Swal from "sweetalert2";
 
 const GameStates = () => {
@@ -12,7 +13,7 @@ const GameStates = () => {
   useEffect(() => {
     const fetchGameStates = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/v1/game_states", {
+        const response = await fetch(`${config.apiBaseUrl}/game_states`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

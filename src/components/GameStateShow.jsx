@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState, useContext, useRef } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { FaTrash, FaPlay, FaPause, FaStepForward, FaRedo } from "react-icons/fa";
+import config from './config';
 import Swal from "sweetalert2";
 
 const GameStateShow = () => {
@@ -32,7 +33,7 @@ const GameStateShow = () => {
   useEffect(() => {
     const fetchGameState = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/v1/game_states/${id}`, {
+        const response = await fetch(`${config.apiBaseUrl}/v1/game_states/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -58,7 +59,7 @@ const GameStateShow = () => {
   const handleNextGeneration = useCallback(async () => {
     if (!id) return;
     try {
-      const response = await fetch(`http://localhost:3000/api/v1/game_states/${id}/next_generation`, {
+      const response = await fetch(`${config.apiBaseUrl}/v1/game_states/${id}/next_generation`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -76,7 +77,7 @@ const GameStateShow = () => {
   const handleResetGame = async () => {
     if (!id) return;
     try {
-      const response = await fetch(`http://localhost:3000/api/v1/game_states/${id}/reset_to_initial`, {
+      const response = await fetch(`${config.apiBaseUrl}/v1/game_states/${id}/reset_to_initial`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -95,7 +96,7 @@ const GameStateShow = () => {
   const handleDeleteGame = async () => {
     if (!id) return;
     try {
-      const response = await fetch(`http://localhost:3000/api/v1/game_states/${id}`, {
+      const response = await fetch(`${config.apiBaseUrl}/v1/game_states/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

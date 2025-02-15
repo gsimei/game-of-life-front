@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import config from './config';
 import Swal from "sweetalert2";
 
 const SignUpPage = () => {
@@ -20,7 +21,7 @@ const SignUpPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/api/v1/users", {
+      const response = await fetch(`${config.apiBaseUrl}/v1/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
