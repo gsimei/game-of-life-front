@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
-import config from './config';
+import config from '../config';
 import Swal from "sweetalert2";
 
 const GameStates = () => {

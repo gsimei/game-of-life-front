@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { FaPuzzlePiece } from "react-icons/fa";
-import config from './config';
+import config from '../config';
 
 const NewGameStatePage = () => {
   const { token } = useContext(AuthContext);

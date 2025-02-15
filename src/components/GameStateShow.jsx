@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, useContext, useRef } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { FaTrash, FaPlay, FaPause, FaStepForward, FaRedo } from "react-icons/fa";
-import config from './config';
+import config from '../config';
 import Swal from "sweetalert2";
 
 const GameStateShow = () => {
